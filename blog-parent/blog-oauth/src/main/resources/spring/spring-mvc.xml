@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- 自动扫描指定包极其子包下的所有bean类 -->
+	<context:component-scan base-package="cc.sprithone.practice.web.controller"/>
+	<!-- 自动扫描mvc注解 -->
+	<mvc:annotation-driven> 
+		<mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                     <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                         <property name="failOnEmptyBeans" value="false" />
+                     </bean>
+                 </property>
+            </bean>
+        </mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 配置静态资源路径映射,防止被拦截 -->
+	<mvc:resources location="/theme/theme-default/static/" mapping="/theme/theme-default/static/**"/>
+	
+	<!-- 配置视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+		p:viewClass="org.springframework.web.servlet.view.JstlView"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+</beans>

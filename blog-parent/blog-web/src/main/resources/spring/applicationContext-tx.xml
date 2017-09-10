@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	 http://www.springframework.org/schema/aop
+	 http://www.springframework.org/schema/aop/spring-aop.xsd
+	 http://www.springframework.org/schema/tx
+	 http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	 
+	<description>事务配置</description>
+	
+	<!-- 配置事务管理器，注入数据源 -->
+	<bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">   
+    	<property name="sessionFactory" ref="sessionFactory" />
+ 	</bean>
+    
+	<!-- 配置事务增强处理bean，指定事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 配置详细定义 -->
+		<tx:attributes>
+			<!-- 所有以get开头的方法是只读的 -->
+			<tx:method name="get*" read-only="true"
+				rollback-for="Exception" />
+			<tx:method name="find*" read-only="true"
+				rollback-for="Exception" />
+			<tx:method name="isExist*" read-only="true"
+				rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="Exception" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+				rollback-for="Exception" />
+			<tx:method name="add*" propagation="REQUIRED" read-only="false" 
+				rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+				rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false"
+				rollback-for="Exception" />
+			<!-- 其他方法使用默认的事务设置，指定超时时长为5秒 -->
+			<tx:method name="*" isolation="DEFAULT" propagation="REQUIRED" timeout="5"
+				rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置事务处理切面 -->
+	<!-- 配置此项会将所有com.example.app.service包下的所有类注入事务管理器，按照txAdvice配置进行事务增强处理 -->
+	
+	<aop:config>
+		<aop:pointcut id="pc" expression="execution(* cc.sprithone.practice.web.service..*(..))" />
+		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
+	</aop:config>
+	<!-- 自动扫描Transactional注解，注入TransactionManager -->
+	<!-- 不配置aop切面的情况下,配置此项自动扫描@Transactional注解,并注入txAdvice事务管理器 。此项为基于注解的形式配置事务管理器-->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+	<!--  -->
+	<aop:config proxy-target-class="true"></aop:config>
+</beans>

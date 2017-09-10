@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context
+	 http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	 
+	<description>整合Hibernate</description>
+	
+	<!-- 会话工厂配置 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="druidDataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- 
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.second_level_cache}</prop>
+				<prop key="hibernate.cache.use_query_cache">${hibernate.query_cache}</prop> -->
+				<!-- 创建session设置为线程安全 -->
+  				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</prop> 
+			</props>
+		</property>
+		<!-- 声明namingStrategy类，方便配置Hibernate数据字段驼峰命名映射到数据库 -->
+		<!-- 将 column_name 转换为 columnName  -->
+		<property name="implicitNamingStrategy" ref="implicitStrategy"/>
+		<!-- 将 columnName 转换为 column_name  -->
+		<property name="physicalNamingStrategy" ref="physicalStrategy" />
+		<!-- 包扫描 -->
+		<property name="packagesToScan" value="cn.spirithone.blog.**.model" />
+	</bean>
+	<bean id="implicitStrategy" class="org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl" />
+	<bean id="physicalStrategy" class="cn.spirithone.blog.core.hibernate.naming.PhysicalNamingStrategyImpl">
+		<!-- <property name="tablePrefix" value="tb_" /> -->
+	</bean>
+</beans>
