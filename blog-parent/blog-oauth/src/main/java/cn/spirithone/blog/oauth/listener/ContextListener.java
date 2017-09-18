@@ -19,6 +19,6 @@ public class ContextListener implements ServletContextListener {
 		// 设置全局变量ctx 存储web项目的项目名
 		servletContext.setAttribute("ctx", servletContext.getContextPath());
 		// 设置全局变量res 存储静态资源存放路径
-		servletContext.setAttribute("res", servletContext.getContextPath() + "/theme/theme-default");
+		servletContext.setAttribute("res", servletContext.getContextPath() + "/res");
 	}
 }

@@ -74,7 +74,6 @@ public class Hibernate5DaoImpl<T> implements BaseHibernateDao<T> {
 		getSession().createQuery(hql).setParameter(0, id).executeUpdate();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll(Class<T> entityClass) {
 		return (List<T>) getSession().createQuery("from " + entityClass.getSimpleName()).getResultList();

@@ -29,6 +29,7 @@ public class UserInfoDaoImpl extends Hibernate5DaoImpl<UserInfo> implements User
 		return super.getAll(UserInfo.class);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public UserInfo getByUid(Long uid) {
 		String hql = "select ui from " + UserInfo.class.getSimpleName() + " ui where ui.uid = ?";

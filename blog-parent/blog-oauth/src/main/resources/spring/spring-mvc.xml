@@ -30,7 +30,7 @@
         </mvc:message-converters>
 	</mvc:annotation-driven>
 	<!-- 配置静态资源路径映射,防止被拦截 -->
-	<mvc:resources location="/theme/theme-default/static/" mapping="/theme/theme-default/static/**"/>
+	<!-- <mvc:resources location="/theme/theme-default/static/" mapping="/theme/theme-default/static/**"/> -->
 	
 	<!-- 配置视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
