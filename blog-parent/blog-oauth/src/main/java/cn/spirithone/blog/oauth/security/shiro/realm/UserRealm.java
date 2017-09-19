@@ -16,6 +16,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.SimpleByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.spirithone.blog.oauth.model.User;
 import cn.spirithone.blog.oauth.service.ResourceService;
@@ -23,12 +24,10 @@ import cn.spirithone.blog.oauth.service.RoleService;
 import cn.spirithone.blog.oauth.service.UserService;
 
 public class UserRealm extends AuthorizingRealm {
-	@Resource
+	@Autowired
 	private UserService userService;
-	@Resource
+	@Autowired
 	private RoleService roleService;
-	@Resource
-	private ResourceService resourceService;
 
 	@Override
 	public String getName() {

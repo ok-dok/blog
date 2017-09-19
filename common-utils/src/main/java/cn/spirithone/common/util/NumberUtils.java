@@ -1,10 +1,3 @@
-/**
- * Title: NumberUtils.java
- * Description: 
- * CopyRight: CopyRight © 
- * @author Shawn_Hou
- * 2017年8月23日 下午11:42:05
- */
 package cn.spirithone.common.util;
 
 /**

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spirithone.blog.oauth.mapper.UserMapper">
+	<resultMap id="userMap" type="user">
+		<id column="id" property="id" />
+		<result column="uid" property="uid" />
+		<result column="username" property="username" />
+		<result column="email" property="email" />
+		<result column="mobile" property="mobile" />
+		<result column="password" property="password" />
+		<result column="salt" property="salt" />
+		<result column="register_time" property="registerTime" />
+		<result column="register_ip" property="registerIp" />
+		<result column="login_time" property="loginTime" />
+		<result column="login_ip" property="loginIp" />
+		<result column="available" property="available" />
+		<result column="history_pwd" property="historyPwd" />
+		<result column="locked" property="locked" />
+	</resultMap>
+
+	<sql id="table">
+		user
+	</sql>
+
+	<sql id="columns">
+		id, uid, username, email, mobile, password, salt,
+		register_time, register_ip, login_time, login_ip,
+		history_pwd, locked
+	</sql>
+
+	<sql id="values">
+		#{id}, #{uid}, #{username}, #{email}, #{mobile},
+		#{password}, #{salt}, #{registerTime}, #{registerIp},
+		#{loginTime}, #{loginIp}, #{historyPwd}
+		#{locked}
+	</sql>
+	<select id="findUser" resultMap="userMap" parameterType="map">
+		select distinct
+		<include refid="columns" />
+		from
+		<include refid="table" />
+		where
+		<if test="username == null and email == null and uid == null and mobile == null">
+			uid = 0
+		</if>
+		<if test="username != null">
+			username = #{username}
+		</if>
+		<if test="email != null">
+			or email = #{email}
+		</if>
+		<if test="uid != null">
+			or uid = #{uid}
+		</if>
+		<if test="mobile != null">
+			or mobile = #{mobile}
+		</if>
+	</select>
+	
+</mapper>
