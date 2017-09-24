@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     
     <!-- 自动扫描指定包极其子包下的所有bean类 -->
-	<context:component-scan base-package="cc.sprithone.practice.web.controller"/>
+	<context:component-scan base-package="cn.spirithone.blog.oauth.controller"/>
 	<!-- 自动扫描mvc注解 -->
 	<mvc:annotation-driven> 
 		<mvc:message-converters register-defaults="true">

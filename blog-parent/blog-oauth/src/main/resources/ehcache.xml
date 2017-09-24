@@ -3,7 +3,7 @@
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
   	<!-- 磁盘缓存位置 -->
-  	<diskStore path="java.io.tmpdir/practice/ehcache"/>
+  	<diskStore path="java.io.tmpdir/blog/ehcache"/>
 
   	<!-- 默认缓存 -->
   	<defaultCache
@@ -13,7 +13,8 @@
 		timeToLiveSeconds="120"
 		maxEntriesLocalDisk="10000000"
 		diskExpiryThreadIntervalSeconds="120"
-		memoryStoreEvictionPolicy="LRU">
+		memoryStoreEvictionPolicy="LRU" 
+		statistics="false">
     	<persistence strategy="localTempSwap"/>
   	</defaultCache>
   	<cache name="shiro-activeSessionCache"
